@@ -40,7 +40,7 @@ public class Tiles {
     }
     public boolean plantSeed(Player player, Seed seed){
         if(player.getObjectcoin() > seed.getCostUsage()){
-            player.setObjectcoin(player.getObjectcoin()-seed.getCostUsage());
+            player.setObjectcoin(player.getObjectcoin()-seed.getSeedCost());
             this.seed = seed;
         }
     }
