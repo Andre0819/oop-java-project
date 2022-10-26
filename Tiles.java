@@ -1,7 +1,10 @@
 public class Tiles {
+    private int dayPlanted;
     private boolean isPlowed;
     private boolean hasRocks;
     private boolean isWithered;
+    private int wateredCrop;
+    private int fertilizedCrop;
     private Seed seed;
 
     public Tiles(){
@@ -9,6 +12,9 @@ public class Tiles {
         this.isWithered = false;
         this.hasRocks = false;
         this.seed = null;
+        this.dayPlanted = 0;
+        this.wateredCrop = 0;
+        this.fertilizedCrop = 0
     }
 
     public boolean plowTile(Tools tool){
@@ -38,10 +44,23 @@ public class Tiles {
         }
         return false;
     }
-    public boolean plantSeed(Player player, Seed seed){
-        if(player.getObjectcoin() > seed.getCostUsage()){
+    public boolean plantSeed(Player player, Seed seed, int day){
+        if(player.getObjectcoin() > seed.getSeedCost()){
             player.setObjectcoin(player.getObjectcoin()-seed.getSeedCost());
             this.seed = seed;
+            this.dayPlanted = day;
+        }
+    }
+    public boolean harvestCrop(Player player, int day){
+        double HarvestTotal, FinalTotal, WaterBonus, FertilizerBonus;
+        if(seed.getHarvestTime()==(this.dayPlanted-day)){
+            HarvestTotal = seed.getProductsProduced() * (seed.getSellingPrice()+player.getXp().getBonusEarnings());
+            WaterBonus = HarvestTotal * 0.2 * wateredCrop;
+            FertilizerBonus = HarvestTotal * 0.5 * fertilizedCrop;
+            FinalTotal = HarvestTotal + WaterBonus + FertilizerBonus;
+            if(seed.getCropType().compareTo("Flower")==0)
+                FinalTotal = FinalTotal * 1.1;
+            player.setObjectcoin(FinalTotal);
         }
     }
 }
