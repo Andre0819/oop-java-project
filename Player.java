@@ -4,20 +4,20 @@ import java.util.Arrays;
 
 public class Player {
     private ArrayList<Tiles> farmLot;
-    private int objectcoin;
-    private FarmerXP xp;
+    private double objectcoin;
+    private FarmerExp exp;
 
     public Player(){
         this.farmLot = new ArrayList<Tiles>();
         this.objectcoin = 100;
-        this.xp = new FarmerXP();
+        this.xp = new FarmerExp();
     }
 
     public ArrayList<Tiles> getFarmLot(){return this.farmLot;}
-    public int getObjectcoin(){return this.objectcoin;}
+    public double getObjectcoin(){return this.objectcoin;}
 
-    public FarmerXP getXp() {
-        return this.xp;
+    public FarmerExp getExp() {
+        return this.exp;
     }
-    public int setObjectcoin(int coin){this.objectcoin = coin;}
+    public void setObjectcoin(double coin){this.objectcoin += coin;}
 }
