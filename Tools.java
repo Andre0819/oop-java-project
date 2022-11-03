@@ -4,7 +4,7 @@ public class Tools {
     private int usageCost;
     private double usageExpGain;
 
-    public Tools(String toolName, int usageCost, double usageExpGain) {
+    public Tools(String toolName) {
         this.toolName = toolName;
 
         switch (this.toolName) {
@@ -33,14 +33,14 @@ public class Tools {
     }
 
     public String getToolName() {
-        return toolName;
+        return this.toolName;
     }
 
     public int getUsageCost() {
-        return usageCost;
+        return this.usageCost;
     }
 
     public double getUsageExpGain() {
-        return usageExpGain;
+        return this.usageExpGain;
     }
 }
