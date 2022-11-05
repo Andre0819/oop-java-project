@@ -2,33 +2,23 @@ public class Tools {
 
     private String toolName;
     private int usageCost;
+    private double usageExpGain;
 
-    public Tools(String toolName) {
+    public Tools(String toolName, int usageCost, double usageExpGain) {
         this.toolName = toolName;
+        this.usageCost = usageCost;
+        this.usageExpGain = usageExpGain;
+    }
 
-        switch (this.toolName) {
-
-            case "Plow":
-            case "Watering Can":
-                this.usageCost = 0;
-                break;
-
-            case "Fertilizer":
-                this.usageCost = 10;
-                break;
-
-            case "Pickaxe":
-                this.usageCost = 50;
-                break;
-
-            case "Shovel":
-                this.usageCost = 7;
-                break;
-        }
+    public String getToolName() {
+        return this.toolName;
     }
 
     public int getUsageCost() {
         return this.usageCost;
     }
 
+    public double getUsageExpGain() {
+        return this.usageExpGain;
+    }
 }
