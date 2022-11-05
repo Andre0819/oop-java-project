@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MyFarm {
     private int day;
@@ -9,12 +8,18 @@ public class MyFarm {
     public MyFarm(){
         this.day = 1;
         this.player = new Player();
-        this.tools = new ArrayList<>(Arrays.asList(new Tools("Plow"), new Tools("Watering Can"), new Tools("Fertilizer"), new Tools("Pickaxe"), new Tools("Shovel"))) ;
-        this.seeds = new ArrayList<>(Arrays.asList(new Seed("Turnip"), new Seed("Carrot"), new Seed("Potato"), new Seed("Rose"), new Seed("Tulips"), new Seed("Sunflower"), new Seed("Mango"), new Seed("Apple")));
+
+        // plow, watering can
+        this.tools = new ArrayList<>();
+        tools.add(new Tools("Plow", 0, 0.5));
+        tools.add(new Tools("Watering Can", 0, 0.5));
+
+        this.seeds = new ArrayList<>();
+        seeds.add(new Seed("Turnip", "Root crop", 2, 1, 2, 0, 1, 1, 2, 5, 6, 5));
     }
     public void advanceNextDay(){
         this.day++;
-        if(player.getFarmLot().getSeed()!=null)
+        if(player.getFarmLot().getSeed() != null)
             if(player.getFarmLot().getSeed().getHarvestTime() < (day-player.getFarmLot().getDayPlanted())){
                 player.getFarmLot().setWithered(true);
             }
@@ -22,8 +27,8 @@ public class MyFarm {
     }
     public boolean checkGameEnd(){
         boolean activeCrop = false;
-        if(player.getFarmLot().getSeed() != null) {
-                activeCrop = true;
+        if (player.getFarmLot().getSeed() != null) {
+            activeCrop = true;
         }
 
         return (player.getObjectcoin() < 5 && activeCrop) || player.getFarmLot().getWitherStatus();
