@@ -9,7 +9,6 @@ public class Seed {
     private int seedProduceMax;
     private int seedCost;
     private int sellingPrice;
-    private double expYield;
 
     public Seed(String seedName){
         this.seedName = seedName;
@@ -23,7 +22,6 @@ public class Seed {
                 this.seedProduceMax = 2;
                 this.seedCost = 5;
                 this.sellingPrice = 6;
-                this.expYield = 5;
             }
             case "Carrot" -> {
                 this.cropType = "Root crop";
@@ -34,7 +32,6 @@ public class Seed {
                 this.seedProduceMax = 2;
                 this.seedCost = 10;
                 this.sellingPrice = 9;
-                this.expYield = 7.5;
             }
             case "Potato" -> {
                 this.cropType = "Root crop";
@@ -45,7 +42,6 @@ public class Seed {
                 this.seedProduceMax = 10;
                 this.seedCost = 20;
                 this.sellingPrice = 3;
-                this.expYield = 12.5;
             }
             case "Rose" -> {
                 this.cropType = "Flower";
@@ -56,7 +52,6 @@ public class Seed {
                 this.seedProduceMax = 1;
                 this.seedCost = 5;
                 this.sellingPrice = 65;
-                this.expYield = 2.5;
             }
             case "Tulips" -> {
                 this.cropType = "Flower";
@@ -67,7 +62,6 @@ public class Seed {
                 this.seedProduceMax = 1;
                 this.seedCost = 10;
                 this.sellingPrice = 9;
-                this.expYield = 5;
             }
             case "Sunflower" -> {
                 this.cropType = "Flower";
@@ -78,7 +72,6 @@ public class Seed {
                 this.seedProduceMax = 1;
                 this.seedCost = 20;
                 this.sellingPrice = 19;
-                this.expYield = 7.5;
             }
             case "Mango" -> {
                 this.cropType = "Fruit tree";
@@ -89,7 +82,6 @@ public class Seed {
                 this.seedProduceMax = 15;
                 this.seedCost = 100;
                 this.sellingPrice = 8;
-                this.expYield = 25;
             }
             case "Apple" -> {
                 this.cropType = "Fruit tree";
@@ -100,7 +92,6 @@ public class Seed {
                 this.seedProduceMax = 15;
                 this.seedCost = 200;
                 this.sellingPrice = 5;
-                this.expYield = 25;
             }
         }
     }
@@ -126,8 +117,7 @@ public class Seed {
     }
 
     public int getSeedProduce() {
-        int produce = (int) Math.floor(Math.random() * (this.seedProduceMax - this.seedProduceMin + 1) + this.seedProduceMin);
-        return produce;
+        return (int) Math.floor(Math.random() * (this.seedProduceMax - this.seedProduceMin + 1) + this.seedProduceMin);
     }
 
     public int getSeedCost() {
@@ -138,8 +128,4 @@ public class Seed {
         return sellingPrice;
     }
 
-    public double getExpYield() {
-        return expYield;
-    }
-
-
+}
