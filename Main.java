@@ -17,9 +17,11 @@ public class Main {
                      1 - Plow
                      2 - Plant Seed
                      3 - Water Crop
-                     4 - Harvest Crop
-                     5 - End Day
-                    Select Action:\s""");
+                     4 - End Day\s""");
+            if(farmLot.getSeed()!=null)
+                if(farmLot.getSeed().getHarvestTime() == farm.getDay()-farmLot.getDayPlanted())
+                    System.out.println(" 5 - Harvest Crop");
+            System.out.println("Select Action: ");
             int action = myObj.nextInt();
             switch(action){
                 case 1: farmLot.plowTile(); break;
@@ -35,8 +37,14 @@ public class Main {
                     }
                     break;
                 case 3: farm.getPlayer().getFarmLot().waterCrop(farm.getPlayer(), farm); break;
-                case 4: farm.getPlayer().getFarmLot().harvestCrop(farm.getPlayer(), farm.getDay()); break;
-                case 5: farm.advanceNextDay(); break;
+                case 4: farm.advanceNextDay(); break;
+                case 5:
+                    if(farmLot.getSeed()!=null)
+                        if(farmLot.getSeed().getHarvestTime() == farm.getDay()-farmLot.getDayPlanted()) {
+                            farm.getPlayer().getFarmLot().harvestCrop(farm.getPlayer(), farm.getDay());
+                            break;
+                        }
+                default: System.out.println("Invalid input. Select a different action."); break;
             }
             if(farm.checkGameEnd()) {
                 System.out.println("The game is over. Player cannot plant any more seeds.");
