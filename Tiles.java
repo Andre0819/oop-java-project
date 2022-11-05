@@ -13,19 +13,22 @@ public class Tiles {
         this.wateredCrop = 0;
     }
 
-    public void plowTile(){
+    public void plowTile(MyFarm farm){
+        Player p = farm.getPlayer();
         if(!this.isPlowed){
             this.isPlowed = true;
+            p.setObjectcoin(p.getObjectcoin()-farm.getTools().get(1).getUsageCost());
             System.out.println("Tile is now plowed.");
         } else
             System.out.println("Tile has already been plowed.");
 
     }
-    public void waterCrop(Player player,MyFarm farm){
+    public void waterCrop(MyFarm farm){
+        Player p = farm.getPlayer();
         if(this.seed != null) {
             if (this.wateredCrop < seed.getWaterBonusLimit()) {
                 this.wateredCrop++;
-                player.setObjectcoin(player.getObjectcoin()-farm.getTools().get(1).getUsageCost());
+                p.setObjectcoin(p.getObjectcoin()-farm.getTools().get(1).getUsageCost());
                 System.out.println("This crop has been watered " + this.wateredCrop + " times.");
             } else
                 System.out.println("This crop cannot be watered anymore.");
@@ -81,4 +84,5 @@ public class Tiles {
         this.isWithered = status;
     }
 }
+
 
