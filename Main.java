@@ -24,7 +24,7 @@ public class Main {
             System.out.println("Select Action: ");
             int action = myObj.nextInt();
             switch(action){
-                case 1: farmLot.plowTile(); break;
+                case 1: farmLot.plowTile(farm); break;
                 case 2:
                     while(true){
                         System.out.println("Available Seeds: \n 1 - Turnip | " +
@@ -36,7 +36,7 @@ public class Main {
                         }else System.out.println("Invalid input. Select a different seed.");
                     }
                     break;
-                case 3: farm.getPlayer().getFarmLot().waterCrop(farm.getPlayer(), farm); break;
+                case 3: farm.getPlayer().getFarmLot().waterCrop(farm); break;
                 case 4: farm.advanceNextDay(); break;
                 case 5:
                     if(farmLot.getSeed()!=null)
