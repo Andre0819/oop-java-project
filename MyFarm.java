@@ -19,16 +19,19 @@ public class MyFarm {
     }
     public void advanceNextDay(){
         this.day++;
-        if(player.getFarmLot().getSeed() != null)
+        if(player.getFarmLot().getSeed()!=null)
             if(player.getFarmLot().getSeed().getHarvestTime() < (day-player.getFarmLot().getDayPlanted())){
+                System.out.println("The crop has withered.");
                 player.getFarmLot().setWithered(true);
+            } else if (player.getFarmLot().getSeed().getHarvestTime() == (day-player.getFarmLot().getDayPlanted())) {
+                System.out.println("The crop is now available for harvest.");
             }
 
     }
     public boolean checkGameEnd(){
         boolean activeCrop = false;
-        if (player.getFarmLot().getSeed() != null) {
-            activeCrop = true;
+        if(player.getFarmLot().getSeed() != null) {
+                activeCrop = true;
         }
 
         return (player.getObjectcoin() < 5 && activeCrop) || player.getFarmLot().getWitherStatus();
