@@ -16,21 +16,17 @@ public class Seed {
     private double expYield;
 
     public Seed(String seedName, String cropType, int harvestTime, int waterNeeds, int waterBonusLimit,
-                int fertilizerNeeds, int fertilizerBonusLimit, int seedProduceMin, int seedProduceMax, int seedCost,
-                int sellingPrice, int expYield){
+                int seedProduceMin, int seedProduceMax, int seedCost, int sellingPrice){
 
         this.seedName = seedName;
         this.cropType = cropType;
         this.harvestTime = harvestTime;
         this.waterNeeds = waterNeeds;
         this.waterBonusLimit = waterBonusLimit;
-        this.fertilizerNeeds = fertilizerNeeds;
-        this.fertilizerBonusLimit = fertilizerBonusLimit;
         this.seedProduceMin = seedProduceMin;
         this.seedProduceMax = seedProduceMax;
         this.seedCost = seedCost;
         this.sellingPrice = sellingPrice;
-        this.expYield = expYield;
     }
 
     public String getSeedName() {
@@ -53,24 +49,12 @@ public class Seed {
         return waterBonusLimit;
     }
 
-    public int getFertilizerNeeds() {
-        return fertilizerNeeds;
-    }
-
-    public int getFertilizerBonusLimit() {
-        return fertilizerBonusLimit;
-    }
-
     public int getSeedCost() {
         return seedCost;
     }
 
     public int getSellingPrice() {
         return sellingPrice;
-    }
-
-    public double getExpYield() {
-        return expYield;
     }
 
     public int getSeedProduce() {
