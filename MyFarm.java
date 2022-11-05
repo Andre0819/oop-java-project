@@ -11,11 +11,11 @@ public class MyFarm {
 
         // plow, watering can
         this.tools = new ArrayList<>();
-        tools.add(new Tools("Plow", 0, 0.5));
-        tools.add(new Tools("Watering Can", 0, 0.5));
+        tools.add(new Tools("Plow", 0));
+        tools.add(new Tools("Watering Can", 0));
 
         this.seeds = new ArrayList<>();
-        seeds.add(new Seed("Turnip", "Root crop", 2, 1, 2, 0, 1, 1, 2, 5, 6, 5));
+        seeds.add(new Seed("Turnip", "Root crop", 2, 1, 2, 1, 2, 5, 6, 5));
     }
     public void advanceNextDay(){
         this.day++;
