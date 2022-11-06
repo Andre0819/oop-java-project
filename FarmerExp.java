@@ -17,8 +17,12 @@ public class FarmerExp {
 
     /**
      * A method that updates the experience of the player upon action that
-     * results to experience yield. The action might be plowing a tile, watering
+     * results to experience. The action might be plowing a tile, watering
      * a seed, or harvesting a crop.
+     * <p>
+     * The method is also responsible for automatically updating the level
+     * for every 100 experience points reached.
+     * </p>
      *
      * @param expYield  the experience yield
      */
