@@ -1,28 +1,40 @@
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
+
         MyFarm farm = new MyFarm();
         Tiles farmLot = farm.getPlayer().getFarmLot();
         Scanner myObj = new Scanner(System.in);
+
         System.out.println("Welcome to MyFarm Simulator! Enjoy the game!");
+
         while(!farm.checkGameEnd()) {
+
+            System.out.println();
             System.out.println("Day: " + farm.getDay());
             System.out.println("Your Farm:");
+
             if(farmLot.getSeed()==null)
                 System.out.println("[ empty ]");
-            else System.out.println("[ " + farm.getPlayer().getFarmLot().getSeed().getSeedName() + " ]");
-            System.out.println("Current Objectcoins: "+farm.getPlayer().getObjectcoin());
+            else
+                System.out.println("[ " + farm.getPlayer().getFarmLot().getSeed().getSeedName() + " ]");
+
+            System.out.printf("Current Objectcoins: %.2f\n", farm.getPlayer().getObjectcoin());
             System.out.println("""
                     Available Actions:\s
                      1 - Plow
                      2 - Plant Seed
                      3 - Water Crop
                      4 - End Day\s""");
+
             if(farmLot.getSeed()!=null)
                 if(farmLot.getSeed().getHarvestTime() == farm.getDay()-farmLot.getDayPlanted())
                     System.out.println(" 5 - Harvest Crop");
+
             System.out.println("Select Action: ");
             int action = myObj.nextInt();
+
             switch(action){
                 case 1: farmLot.plowTile(farm); break;
                 case 2:
@@ -46,6 +58,7 @@ public class Main {
                         }
                 default: System.out.println("Invalid input. Select a different action."); break;
             }
+
             if(farm.checkGameEnd()) {
                 System.out.println("The game is over. Player cannot plant any more seeds.");
                 break;
