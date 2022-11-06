@@ -14,19 +14,20 @@ public class Main {
 
         // Loops the game as long the player can still play
         while(!farm.checkGameEnd()) {
-
-            System.out.println();
+            System.out.println("----------------------------");
             System.out.println("Day: " + farm.getDay());
-            System.out.println("Your Farm:");
+            System.out.printf("Current Level: %d (Exp: %.2f)\n", farm.getPlayer().getFarmerExp().getPlayerLevel(), farm.getPlayer().getFarmerExp().getPlayerExp());
+            System.out.printf("Current Objectcoins: %.2f\n\n", farm.getPlayer().getObjectcoin());
 
             // Prints the farm lot of the player
+            System.out.println("Your Farm:");
             if(farmLot.getSeed() == null)
                 System.out.println("[ empty ]");
             else
                 System.out.println("[ " + farm.getPlayer().getFarmLot().getSeed().getSeedName() + " ]");
 
+
             // Prompts the player for action
-            System.out.printf("Current Objectcoins: %.2f\n", farm.getPlayer().getObjectcoin());
             System.out.println("""
                     Available Actions:\s
                      1 - Plow
@@ -73,7 +74,7 @@ public class Main {
                             break;
                         }
 
-                // Player inputs an invalid action
+                    // Player inputs an invalid action
                 default: System.out.println("Invalid input. Select a different action."); break;
             }
 
