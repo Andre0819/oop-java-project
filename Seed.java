@@ -56,7 +56,6 @@ public class Seed {
 
     public int getSeedProduce() {
         Random randomizer = new Random();
-        int produce = randomizer.nextInt(seedProduceMin, seedProduceMax + 1);
-        return produce;
+        return randomizer.nextInt(seedProduceMin, seedProduceMax + 1);
     }
 }
