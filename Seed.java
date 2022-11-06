@@ -7,13 +7,10 @@ public class Seed {
     private int harvestTime;
     private int waterNeeds;
     private int waterBonusLimit;
-    private int fertilizerNeeds;
-    private int fertilizerBonusLimit;
     private int seedProduceMin;
     private int seedProduceMax;
     private int seedCost;
     private int sellingPrice;
-    private double expYield;
 
     public Seed(String seedName, String cropType, int harvestTime, int waterNeeds, int waterBonusLimit,
                 int seedProduceMin, int seedProduceMax, int seedCost, int sellingPrice){
