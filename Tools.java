@@ -2,9 +2,8 @@ public class Tools {
 
     private String toolName;
     private int usageCost;
-    private double usageExpGain;
 
-    public Tools(String toolName, int usageCost, double usageExpGain) {
+    public Tools(String toolName, int usageCost) {
         this.toolName = toolName;
         this.usageCost = usageCost;
     }
