@@ -15,7 +15,7 @@ public class MyFarm {
         tools.add(new Tools("Watering Can", 0));
 
         this.seeds = new ArrayList<>();
-        seeds.add(new Seed("Turnip", "Root crop", 2, 1, 2, 1, 2, 5, 6, 5));
+        seeds.add(new Seed("Turnip", "Root crop", 2, 1, 2, 1, 2, 5, 6));
     }
     public void advanceNextDay(){
         this.day++;
