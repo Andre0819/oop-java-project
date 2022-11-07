@@ -69,14 +69,10 @@ public class Tiles {
     public void waterCrop(MyFarm farm){
         Player p = farm.getPlayer();
         if(this.seed != null) {
-            if (this.wateredCrop < seed.getWaterBonusLimit()) {
-                // update objectcoins, exp, and wateredCrop count
-                this.wateredCrop++;
-                p.setObjectcoin(p.getObjectcoin()-farm.getTools().get(1).getUsageCost());
-                p.getFarmerExp().updatePlayerExp(farm.getTools().get(1).getExpYield());
-                System.out.println("This crop has been watered " + this.wateredCrop + " times.");
-            } else
-                System.out.println("This crop cannot be watered anymore.");
+            // update exp
+            p.getFarmerExp().updatePlayerExp(farm.getTools().get(1).getExpYield());
+            this.wateredCrop++;
+            System.out.println("This crop has been watered " + this.wateredCrop + " times.");
         }
         else
             System.out.println("The tile is currently empty.");
@@ -133,7 +129,9 @@ public class Tiles {
                 if (wateredCrop >= seed.getWaterNeeds()) { // check if water requirement is met
                     produce = seed.getSeedProduce();
                     HarvestTotal = produce * (seed.getSellingPrice());
-                    WaterBonus = HarvestTotal * 0.2 * (wateredCrop-1);
+                    if(wateredCrop>= seed.getWaterBonusLimit())
+                        WaterBonus = HarvestTotal * 0.2 * (seed.getWaterBonusLimit()-1);
+                    else WaterBonus = HarvestTotal * 0.2 * (wateredCrop-1);
                     FinalTotal = HarvestTotal + WaterBonus;
                     if (seed.getCropType().compareTo("Flower") == 0) // flowers get bonuses
                         FinalTotal = FinalTotal * 1.1;
@@ -173,7 +171,12 @@ public class Tiles {
      * @return  the value in attribute isWithered
      */
     public boolean getWitherStatus(){return this.isWithered;}
-
+    /**
+     * Returns the number of times the crop is watered.
+     *
+     * @return  the integer value in attribute wateredCrop
+     */
+    public int getWateredCrop(){return this.wateredCrop;}
     /**
      * Takes boolean status as a parameter and assigns it
      * to attribute isWithered.
