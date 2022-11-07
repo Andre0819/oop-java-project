@@ -58,7 +58,7 @@ public class MyFarm {
                 System.out.println("The crop has withered.");
                 player.getFarmLot().setWithered(true);
             } else if (player.getFarmLot().getSeed().getHarvestTime() == (day - player.getFarmLot().getDayPlanted())) {
-                System.out.println("The crop is now available for harvest.");
+                System.out.println("The crop will be available for harvest.");
             }
         }
 
@@ -76,7 +76,7 @@ public class MyFarm {
                 activeCrop = true;
         }
 
-        return (player.getObjectcoin() < 5 && activeCrop) || player.getFarmLot().getWitherStatus();
+        return (player.getObjectcoin() < 5 && !activeCrop) || player.getFarmLot().getWitherStatus();
     }
 
     /**
