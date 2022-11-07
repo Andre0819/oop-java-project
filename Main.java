@@ -39,6 +39,11 @@ public class Main {
             else
                 System.out.println("[ " + farm.getPlayer().getFarmLot().getSeed().getSeedName() + " ]");
 
+            // Prints text if water requirement of crop is not met on harvest day
+            if(farmLot.getSeed() != null)
+                if(farmLot.getSeed().getHarvestTime() == farm.getDay()-farmLot.getDayPlanted() && farmLot.getWateredCrop()<farmLot.getSeed().getWaterNeeds())
+                    System.out.println(farmLot.getSeed().getSeedName()+" still hasn't met its water requirement.");
+
             // Prompts the player for action
             System.out.println("""
                     Available Actions:\s
@@ -50,7 +55,7 @@ public class Main {
             if(farmLot.getSeed() != null)
                 if(farmLot.getSeed().getHarvestTime() == farm.getDay()-farmLot.getDayPlanted())
                     System.out.println(" 5 - Harvest Crop");
-            System.out.println("Select Action: ");
+            System.out.print("Select Action: ");
             int action = myObj.nextInt();
             switch(action){
 
