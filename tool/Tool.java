@@ -1,6 +1,5 @@
 package tool;
 
-import seed.*;
 public abstract class Tool {
 
     private String toolName;
