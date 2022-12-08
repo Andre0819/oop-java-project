@@ -111,6 +111,7 @@ public class MyFarmController {
             }
         });
 
+        //setting option buttons listener
         this.myFarmView.setOptionButtonListeners(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
