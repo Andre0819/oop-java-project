@@ -1,6 +1,7 @@
 import javax.swing.border.Border;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 public class MyFarmView {
@@ -11,7 +12,7 @@ public class MyFarmView {
 
     private JTextArea playerDataTextArea, feedbackTextArea;
 
-    private JButton plowBtn, waterBtn, fertBtn, pickaxeBtn, shovelBtn, harvestBtn, regFarmBtn, plantBtn;
+    private JButton plowBtn, waterBtn, fertBtn, pickaxeBtn, shovelBtn, harvestBtn, regFarmBtn, plantBtn, endDayBtn, ghostBtn;
 
     private ArrayList<JButton> tileButtons, optionButtons;
 
@@ -20,7 +21,7 @@ public class MyFarmView {
     public MyFarmView() {
         mainFrame = new JFrame("MyFarm Simulation Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(750, 750);
+        mainFrame.setSize(900, 750);
         mainFrame.setLayout(new BorderLayout(10, 10));
 
         /* Dividing the frame to three panels */
@@ -56,6 +57,7 @@ public class MyFarmView {
         //player data display
         JPanel subPanelPlayerData = new JPanel();
         playerDataTextArea = new JTextArea(" ");
+        playerDataTextArea.setText("Welcome to the game! Enjoy and have fun :))");
 
         Border border1 = BorderFactory.createLineBorder(new Color(0, 100, 0),3);
         playerDataTextArea.setPreferredSize(new Dimension(400, 100));
@@ -105,7 +107,7 @@ public class MyFarmView {
 
         //subPanel2Tools
         JPanel subPanel2Tools = new JPanel();
-        subPanel2Tools.setLayout(new GridLayout(2, 4, 1, 1));
+        subPanel2Tools.setLayout(new GridLayout(2, 5, 1, 1));
 
         plowBtn = new JButton("Plow");
         ImageIcon plowIcon = new ImageIcon("plowIcon.png");
@@ -155,6 +157,18 @@ public class MyFarmView {
         regFarmBtn.setHorizontalTextPosition(JButton.CENTER);
         regFarmBtn.setVerticalTextPosition(JButton.BOTTOM);
 
+        endDayBtn = new JButton("End Day");
+        ImageIcon endDayIcon = new ImageIcon("endDayIcon.png");
+        endDayBtn.setIcon(endDayIcon);
+        endDayBtn.setHorizontalTextPosition(JButton.CENTER);
+        endDayBtn.setVerticalTextPosition(JButton.BOTTOM);
+
+        ghostBtn = new JButton("Boo!");
+        ImageIcon ghostIcon = new ImageIcon("ghostIcon.png");
+        ghostBtn.setIcon(ghostIcon);
+        ghostBtn.setHorizontalTextPosition(JButton.CENTER);
+        ghostBtn.setVerticalTextPosition(JButton.BOTTOM);
+
         subPanel2Tools.add(plowBtn);
         subPanel2Tools.add(waterBtn);
         subPanel2Tools.add(fertBtn);
@@ -163,15 +177,17 @@ public class MyFarmView {
         subPanel2Tools.add(plantBtn);
         subPanel2Tools.add(harvestBtn);
         subPanel2Tools.add(regFarmBtn);
+        subPanel2Tools.add(endDayBtn);
+        subPanel2Tools.add(ghostBtn);
 
 
         //subPanel2Options
         JPanel subPanel2Options = new JPanel();
-        subPanel2Options.setLayout(new GridLayout(1, 8, 0, 0));
+        subPanel2Options.setLayout(new GridLayout(1, 9, 0, 0));
         optionButtons = new ArrayList<JButton>();
 
         for (int i = 0; i < 8; i++) { //8 options of seeds
-            optionButtons.add(new JButton(Integer.toString(i + 1)));
+            optionButtons.add(new JButton(Integer.toString(i)));
             JButton tempButton = optionButtons.get(i);
             subPanel2Options.add(tempButton);
         }
@@ -190,6 +206,69 @@ public class MyFarmView {
     }
 
     //add setters here
+    public void setFeedbackTextArea(String text) {
+        this.feedbackTextArea.setText(text);
+    }
 
+    public void setPlayerDataTextArea(String text) {
+        this.playerDataTextArea.setText(text);
+    }
 
+    public void setTileButtonListeners(ActionListener actionListener) {
+        for (int i = 0; i < 50; i++) {
+            this.tileButtons.get(i).addActionListener(actionListener);
+        }
+    }
+
+    public void setPlowBtnListener(ActionListener actionListener) {
+        this.plowBtn.addActionListener(actionListener);
+    }
+
+    public void setWaterBtnListener(ActionListener actionListener) {
+        this.waterBtn.addActionListener(actionListener);
+    }
+
+    public void setFertBtnListener(ActionListener actionListener) {
+        this.fertBtn.addActionListener(actionListener);
+    }
+
+    public void setPickaxeBtnListener(ActionListener actionListener) {
+        this.pickaxeBtn.addActionListener(actionListener);
+    }
+
+    public void setShovelBtnListener(ActionListener actionListener) {
+        this.shovelBtn.addActionListener(actionListener);
+    }
+
+    public void setHarvestBtnListener(ActionListener actionListener) {
+        this.harvestBtn.addActionListener(actionListener);
+    }
+
+    public void setRegFarmBtnListener(ActionListener actionListener) {
+        this.regFarmBtn.addActionListener(actionListener);
+    }
+
+    public void setPlantBtnListener(ActionListener actionListener) {
+        this.plantBtn.addActionListener(actionListener);
+    }
+
+    public void setEndDayBtnListener(ActionListener actionListener) {
+        this.endDayBtn.addActionListener(actionListener);
+    }
+
+    public void setGhostBtnListener(ActionListener actionListener) {
+        this.ghostBtn.addActionListener(actionListener);
+    }
+
+    public void setOptionButtonListeners(ActionListener actionListener) {
+        for (int i = 0; i < 8; i++) {
+            this.optionButtons.get(i).addActionListener(actionListener);
+        }
+    }
+    public ArrayList<JButton> getTileButtons() {
+        return this.tileButtons;
+    }
+    public ArrayList<JButton> getOptionButtons() {
+        return optionButtons;
+    }
 }
