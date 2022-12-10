@@ -35,12 +35,8 @@ public class Shovel extends Tool {
         if (player.getObjectcoin() >= getUsageCost()) {
 
             // removes withered crop
-            if (tile.getWitherStatus()) {
+            if (!tile.getHasRocks()) {
                 tile.setWithered(false);
-            }
-
-            // remove seed when there is myfarm.seed
-            else if (tile.getSeed() != null) {
                 tile.removeSeed();
                 tile.setIsPlowed(false);
                 tile.setFertilizedCrop(0);
@@ -53,6 +49,7 @@ public class Shovel extends Tool {
 
             actionStatus = true;
         }
+
 
         // if used on unplowed || with stone == lose obj coins
         return actionStatus;
