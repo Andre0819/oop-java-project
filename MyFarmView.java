@@ -1,3 +1,4 @@
+
 import javax.swing.border.Border;
 import javax.swing.*;
 import java.awt.*;
@@ -12,16 +13,20 @@ public class MyFarmView {
 
     private JTextArea playerDataTextArea, feedbackTextArea;
 
-    private JButton plowBtn, waterBtn, fertBtn, pickaxeBtn, shovelBtn, harvestBtn, regFarmBtn, plantBtn, endDayBtn, ghostBtn;
+    private JButton plowBtn, waterBtn, fertBtn, pickaxeBtn, shovelBtn, harvestBtn, regFarmBtn, plantBtn, endDayBtn, qouteBtn;
 
-    private ArrayList<JButton> tileButtons, optionButtons;
+    private ArrayList<JButton> tileButtons, seedOptionBtns;
+
+    private boolean tileClicked;
 
 
 
     public MyFarmView() {
+        this.tileClicked = false;
+
         mainFrame = new JFrame("MyFarm Simulation Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(900, 750);
+        mainFrame.setSize(1280, 768);
         mainFrame.setLayout(new BorderLayout(10, 10));
 
         /* Dividing the frame to three panels */
@@ -57,7 +62,12 @@ public class MyFarmView {
         //player data display
         JPanel subPanelPlayerData = new JPanel();
         playerDataTextArea = new JTextArea(" ");
-        playerDataTextArea.setText("Welcome to the game! Enjoy and have fun :))");
+        playerDataTextArea.setText(
+                "Player Level: 0"+
+                "\nPlayer Exp: 0.0"+
+                "\nObjectcoins: 100"+
+                "\nFarmer Type: Farmer"+
+                "\nDay: 1");
 
         Border border1 = BorderFactory.createLineBorder(new Color(0, 100, 0),3);
         playerDataTextArea.setPreferredSize(new Dimension(400, 100));
@@ -74,7 +84,7 @@ public class MyFarmView {
         ImageIcon tileIcon = new ImageIcon("landIcon.png");
 
         for (int i = 0; i < 50; i++) {
-            tileButtons.add(new JButton(Integer.toString(i)));
+            tileButtons.add(new JButton(Integer.toString(i+1)));
             JButton tempButton = tileButtons.get(i);
             tempButton.setIcon(tileIcon);
             tempButton.setHorizontalTextPosition(JButton.CENTER);
@@ -91,7 +101,7 @@ public class MyFarmView {
         JPanel subPanelFeedback = new JPanel();
 
         feedbackTextArea = new JTextArea(" ");
-        feedbackTextArea.setPreferredSize(new Dimension(320, 170));
+        feedbackTextArea.setPreferredSize(new Dimension(400, 170));
         Border border2 = BorderFactory.createLineBorder(new Color(92, 64, 51),3);
         feedbackTextArea.setBorder(border2);
         feedbackTextArea.setEditable(false);
@@ -150,6 +160,7 @@ public class MyFarmView {
         harvestBtn.setIcon(coinIcon);
         harvestBtn.setHorizontalTextPosition(JButton.CENTER);
         harvestBtn.setVerticalTextPosition(JButton.BOTTOM);
+        harvestBtn.setEnabled(false);
 
         regFarmBtn = new JButton("Register");
         ImageIcon farmerTypeIcon = new ImageIcon("farmerTypeIcon.png");
@@ -163,11 +174,11 @@ public class MyFarmView {
         endDayBtn.setHorizontalTextPosition(JButton.CENTER);
         endDayBtn.setVerticalTextPosition(JButton.BOTTOM);
 
-        ghostBtn = new JButton("Boo!");
+        qouteBtn = new JButton("Boo!");
         ImageIcon ghostIcon = new ImageIcon("ghostIcon.png");
-        ghostBtn.setIcon(ghostIcon);
-        ghostBtn.setHorizontalTextPosition(JButton.CENTER);
-        ghostBtn.setVerticalTextPosition(JButton.BOTTOM);
+        qouteBtn.setIcon(ghostIcon);
+        qouteBtn.setHorizontalTextPosition(JButton.CENTER);
+        qouteBtn.setVerticalTextPosition(JButton.BOTTOM);
 
         subPanel2Tools.add(plowBtn);
         subPanel2Tools.add(waterBtn);
@@ -178,18 +189,42 @@ public class MyFarmView {
         subPanel2Tools.add(harvestBtn);
         subPanel2Tools.add(regFarmBtn);
         subPanel2Tools.add(endDayBtn);
-        subPanel2Tools.add(ghostBtn);
-
+        subPanel2Tools.add(qouteBtn);
 
         //subPanel2Options
         JPanel subPanel2Options = new JPanel();
         subPanel2Options.setLayout(new GridLayout(1, 9, 0, 0));
-        optionButtons = new ArrayList<JButton>();
+        seedOptionBtns = new ArrayList<JButton>();
 
         for (int i = 0; i < 8; i++) { //8 options of seeds
-            optionButtons.add(new JButton(Integer.toString(i)));
-            JButton tempButton = optionButtons.get(i);
-            subPanel2Options.add(tempButton);
+            switch(i){
+                case 0:
+                    seedOptionBtns.add(new JButton("Turnip"));
+                    break;
+                case 1:
+                    seedOptionBtns.add(new JButton("Carrot"));
+                    break;
+                case 2:
+                    seedOptionBtns.add(new JButton("Potato"));
+                    break;
+                case 3:
+                    seedOptionBtns.add(new JButton("Rose"));
+                    break;
+                case 4:
+                    seedOptionBtns.add(new JButton("Tulips"));
+                    break;
+                case 5:
+                    seedOptionBtns.add(new JButton("Sunflower"));
+                    break;
+                case 6:
+                    seedOptionBtns.add(new JButton("Mango"));
+                    break;
+                case 7:
+                    seedOptionBtns.add(new JButton("Apple"));
+                    break;
+            }
+            seedOptionBtns.get(i).setEnabled(false);
+            subPanel2Options.add(seedOptionBtns.get(i));
         }
 
         //storing to all subPanel2 to subPanelPlayerCommands
@@ -205,13 +240,19 @@ public class MyFarmView {
         mainFrame.setVisible(true);
     }
 
-    //add setters here
+    public JFrame getMainFrame(){return this.mainFrame;}
+
     public void setFeedbackTextArea(String text) {
         this.feedbackTextArea.setText(text);
     }
 
-    public void setPlayerDataTextArea(String text) {
-        this.playerDataTextArea.setText(text);
+    public void setPlayerDataTextArea(int level, double exp, double coins, String type, int day) {
+        this.playerDataTextArea.setText(
+                "Player Level: "+level +
+                "\nPlayer Exp: "+exp +
+                "\nObjectcoins: "+coins +
+                "\nFarmer Type: "+type +
+                "\nDay: "+day);;
     }
 
     public void setTileButtonListeners(ActionListener actionListener) {
@@ -256,19 +297,27 @@ public class MyFarmView {
         this.endDayBtn.addActionListener(actionListener);
     }
 
-    public void setGhostBtnListener(ActionListener actionListener) {
-        this.ghostBtn.addActionListener(actionListener);
+    public void setCheckGameEndBtnListener(ActionListener actionListener) {
+        this.qouteBtn.addActionListener(actionListener);
     }
 
-    public void setOptionButtonListeners(ActionListener actionListener) {
+    public void setSeedOptionBtns(ActionListener actionListener) {
         for (int i = 0; i < 8; i++) {
-            this.optionButtons.get(i).addActionListener(actionListener);
+            this.seedOptionBtns.get(i).addActionListener(actionListener);
         }
     }
     public ArrayList<JButton> getTileButtons() {
         return this.tileButtons;
     }
-    public ArrayList<JButton> getOptionButtons() {
-        return optionButtons;
+    public ArrayList<JButton> getSeedOptionBtns() {
+        return seedOptionBtns;
     }
+    public boolean isTileClicked() {
+        return tileClicked;
+    }
+    public void setTileClicked(boolean b){this.tileClicked=b;}
+    public void setHarvestBtnClickable(boolean b){
+        this.harvestBtn.setEnabled(b);
+    }
+
 }

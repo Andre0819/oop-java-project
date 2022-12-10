@@ -48,15 +48,17 @@ public class MyFarmModel {
 
         // add turnip
         this.seeds = new ArrayList<>(){{
-            add(new Apple());
+            add(new Turnip());
             add(new Carrot());
-            add(new Mango());
             add(new Potato());
             add(new Rose());
-            add(new Sunflower());
             add(new Tulips());
-            add(new Turnip());
+            add(new Sunflower());
+            add(new Mango());
+            add(new Apple());
         }};
+
+        spreadRocks();
     }
 
     public void spreadRocks(){
@@ -150,15 +152,31 @@ public class MyFarmModel {
      */
     public boolean checkGameEnd(){
         //to be fixed
+        boolean gameEnd = false;
         boolean activeCrop = false;
-        boolean withered = false;
-        for(Tile t : player.getFarmLot()){
-            if(t.getSeed() != null) { //checks if the tile currently has a myfarm.seed.
+
+        ArrayList<Tile> UnoccupiedList = new ArrayList<>();
+
+        for(Tile t: player.getFarmLot()){
+            if(t.getSeed()==null && !t.getHasRocks() && !t.getWitherStatus())
+                UnoccupiedList.add(t);
+            if(t.getSeed() != null){
                 activeCrop = true;
+                break;
             }
         }
 
-        return (player.getObjectcoin() < 5 && !activeCrop) ;
+        if(UnoccupiedList.isEmpty()) { // cost ng shovel + cost ng cheapest seed(with cost reduction)
+            if(!activeCrop && player.getObjectcoin() < (7+(5-player.getFarmerType().getCostReduction()))){
+                gameEnd = true;
+            }
+        } else {
+            if(player.getObjectcoin()<(5-player.getFarmerType().getCostReduction())){
+                gameEnd = true;
+            }
+        }
+
+        return gameEnd ;
     }
 
     /**

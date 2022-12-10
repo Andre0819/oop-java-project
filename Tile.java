@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Tile {
@@ -45,7 +47,7 @@ public class Tile {
      * @param day       the number of days in-game
      */
     public void plantSeed(Player player, Seed plant, int day){
-        int[] edges = {1,2,3,4,5,6,7,8,9,10,11,20,21,30,31,40,41,42,43,44,45,46,47,48,49,50};
+        Integer[] edges = {1,2,3,4,5,6,7,8,9,10,11,20,21,30,31,40,41,42,43,44,45,46,47,48,49,50};
         ArrayList<Tile> farm = player.getFarmLot();
 
         ArrayList<Integer> restrictions= new ArrayList<>(){{
@@ -60,13 +62,13 @@ public class Tile {
         }};
 
         if(seed==null) {
-            if(this.isPlowed) {
+            if(this.isPlowed && !this.getHasRocks() && !this.getWitherStatus()) {
                 boolean result = true;
                 if(plant.getCropType().equals("Fruit tree")){
-                    if(!List.of(edges).contains(tileNumber)){
+                    if(!Arrays.asList(edges).contains(tileNumber)){
                         for (Integer i: restrictions) {
-                            if(i>=0)
-                                if (farm.get(i).getSeed() != null || farm.get(i).getHasRocks() || farm.get(i).getWitherStatus()) {
+                            if(i<=50 && i>=0)
+                                if (farm.get(i-1).getSeed() != null || farm.get(i-1).getHasRocks() || farm.get(i-1).getWitherStatus()) {
                                     result = false;
                                     break;
                                 }
@@ -79,11 +81,11 @@ public class Tile {
                     this.seed = plant;
                     this.dayPlanted = day;
                     System.out.println(plant.getSeedName() + " successfully planted.");
-                    System.out.println("myfarm.Player's Objectcoins is now " + player.getObjectcoin() + ".");
+                    System.out.println("Player's Objectcoins is now " + player.getObjectcoin() + ".");
                 } else
-                    System.out.println("myfarm.Player does not have enough Objectcoins.");
-            }else System.out.println("myfarm.Tile is unplowed.");
-        }else System.out.println("A myfarm.seed is already planted.");
+                    System.out.println("Player does not have enough Objectcoins.");
+            }else System.out.println("Seed cannot be planted on this tile.");
+        }else System.out.println("A seed is already planted.");
 
     }
 
@@ -106,7 +108,7 @@ public class Tile {
         double HarvestTotal, FinalTotal, WaterBonus, FertBonus, produce; // local variables for computations
         if(seed!=null && !this.isWithered) { // check for wither status and if myfarm.seed is planted
             if (seed.getHarvestTime() == (day - this.dayPlanted)) {
-                if (wateredCrop >= seed.getWaterNeeds()) { // check if water requirement is met
+                if (wateredCrop >= seed.getWaterNeeds() && fertilizedCrop >= seed.getFertilizerNeeds()) { // check if water requirement is met
                     produce = seed.getSeedProduce();
                     HarvestTotal = produce * (seed.getSellingPrice()+player.getFarmerType().getBonusPerProduce());
                     if(wateredCrop>= (seed.getWaterBonusLimit()+player.getFarmerType().getWaterBonusLI()))
@@ -123,6 +125,7 @@ public class Tile {
                     player.updatePlayerExp(seed.getExpYield());
                     // reset attribute values
                     this.wateredCrop = 0;
+                    this.fertilizedCrop = 0;
                     this.seed = null;
                     this.isPlowed = false;
                     System.out.println("Crop successfully harvested.\nProducts produced: " + produce);
@@ -153,15 +156,25 @@ public class Tile {
      */
     public int getDayPlanted(){return this.dayPlanted;}
 
+    /**
+     * Returns the plow status of the crop
+     *
+     * @return the value in attribute isPlowed
+     */
     public boolean getIsPlowed(){return this.isPlowed;}
 
     /**
-     * Returns the wither status of the crop.
+     * Returns the wither status of the crop
      *
      * @return  the value in attribute isWithered
      */
     public boolean getWitherStatus(){return this.isWithered;}
 
+    /**
+     * Returns the rock status of the tile
+     *
+     * @return the value in attribute hasRocks
+     */
     public boolean getHasRocks() {
         return this.hasRocks;
     }

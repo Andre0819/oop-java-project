@@ -29,14 +29,12 @@ public class Player {
     public Player(){
         this.farmLot = new ArrayList<>();
 
-        int i=0;
-        while(this.farmLot.size()<50){
+        for(int i=1;i<=50;i++)
             this.farmLot.add(new Tile(i));
-            i++;
-        }
 
-        this.farmerExp = 1000;
-        this.farmerLevel = 10;
+
+        this.farmerExp = 0;
+        this.farmerLevel = 0;
         this.farmerTypeList = new ArrayList<>(){{
             add(new DefaultFarmer());
             add(new RegisteredFarmer());
@@ -44,7 +42,7 @@ public class Player {
             add(new LegendaryFarmer());
         }};
         this.farmerType = farmerTypeList.get(0);
-        this.objectcoin = 600;
+        this.objectcoin = 100;
     }
 
     public boolean updateFarmerType(){
