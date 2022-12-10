@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * myfarm.Player class contains the farmLot, objectcoin,
- * and farmerExp attributes. Most methods from
- * other classes will be accessing myfarm.Player to obtain
+ * Player class contains the farmLot, objectcoin,
+ * farmerExp, farmerLevel, farmerType, and farmerTypeList. Most methods from
+ * other classes will be accessing Player to obtain
  * or update values in its attributes.
  */
 public class Player {
@@ -18,12 +18,12 @@ public class Player {
     private double objectcoin;
 
     /**
-     * Creates a myfarm.Player object.
+     * Creates Player object.
      * <p>
      * The values of the attribute objectcoin is
-     * initialized to 100. The attributes farmLot and
-     * farmerExp are initialized with instantiated objects
-     * Tiles and FarmerExp respectively.
+     * initialized to 100. The attribute farmLot will have 50 Tile objects
+     * added to it. The attribute farmerTypeList will have different farmer types added in.
+     *
      * </p>
      */
     public Player(){
@@ -44,7 +44,12 @@ public class Player {
         this.farmerType = farmerTypeList.get(0);
         this.objectcoin = 100;
     }
-
+    /**
+     * A method that updates the farmerType of Player.
+     *
+     *
+     * @return boolean value whether action is successful.
+     */
     public boolean updateFarmerType(){
         boolean result = false;
         int type=0;

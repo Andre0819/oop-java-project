@@ -27,7 +27,7 @@ public class WateringCan extends Tool {
         boolean actionStatus = false;
 
         // can only be performed on a tile with a myfarm.seed
-        if (tile.getSeed() != null) {
+        if (tile.getSeed() != null && !tile.getWitherStatus()) {
 
             tile.setWateredCrop(tile.getWateredCrop() + 1);
 

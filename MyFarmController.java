@@ -13,6 +13,16 @@ public class MyFarmController {
     private Integer selected;
     private boolean plantBtnClicked;
 
+    /**
+     * This constructor assigns the initial values to the attributes of MyFarmController
+     * It takes in MyFarmView and MyFarmModel objects as parameters.
+     * This also contains the action listeners to be set to the buttons from MyFarmView
+     * which is connected to the MyFarmModel.
+     *
+     * @param myFarmView MyFarmView object
+     * @param myFarmModel MyFarmModel object
+     *
+     */
 
     public MyFarmController(MyFarmView myFarmView, MyFarmModel myFarmModel) {
         this.myFarmView = myFarmView;
@@ -46,9 +56,11 @@ public class MyFarmController {
                                         "\nDay Planted: " + farmLot.get(selected).getDayPlanted() +
                                         "\nHarvest Day: " + (farmLot.get(selected).getDayPlanted() + farmLot.get(selected).getSeed().getHarvestTime())) : "\nSeed: None")
                         );
-                        if (farmLot.get(selected).getSeed() != null)
+                        if (farmLot.get(selected).getSeed() != null) {
                             if (farmLot.get(selected).getDayPlanted() + farmLot.get(selected).getSeed().getHarvestTime() == myFarmModel.getDay())
                                 myFarmView.setHarvestBtnClickable(true);
+                            else myFarmView.setHarvestBtnClickable(false);
+                        }
                         myFarmView.setTileClicked(true);
                         break;
                     }
@@ -68,7 +80,7 @@ public class MyFarmController {
                     if (result == JOptionPane.YES_OPTION) {
                         if (myFarmModel.getTools().get(2).useTool(farmLot.get(selected), myFarmModel.getPlayer())) {
                             myFarmView.setFeedbackTextArea("Plow used on Tile " + (selected + 1));
-                        } else myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
+                        } else myFarmView.setFeedbackTextArea("You cannot perform the action on Tile " + (selected + 1));
                     }
                     myFarmView.setPlayerDataTextArea(
                             player.getFarmerLevel(),
@@ -95,7 +107,7 @@ public class MyFarmController {
                         if (myFarmModel.getTools().get(4).useTool(farmLot.get(selected), myFarmModel.getPlayer())) {
                             myFarmView.setFeedbackTextArea("Watering Can used on Tile " + (selected + 1));
                         } else
-                            myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
+                            myFarmView.setFeedbackTextArea("You cannot perform the action on Tile " + (selected + 1));
                     }
                     myFarmView.setPlayerDataTextArea(
                             player.getFarmerLevel(),
@@ -122,7 +134,7 @@ public class MyFarmController {
                         if (myFarmModel.getTools().get(0).useTool(farmLot.get(selected), myFarmModel.getPlayer())) {
                             myFarmView.setFeedbackTextArea("Fertilizer used on Tile " + (selected + 1));
                         } else
-                            myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
+                            myFarmView.setFeedbackTextArea("You cannot perform the action on Tile " + (selected + 1));
                     }
                     myFarmView.setPlayerDataTextArea(
                             player.getFarmerLevel(),
@@ -149,7 +161,7 @@ public class MyFarmController {
                         if (myFarmModel.getTools().get(1).useTool(farmLot.get(selected), myFarmModel.getPlayer())) {
                             myFarmView.setFeedbackTextArea("Pickaxe used on Tile " + (selected + 1));
                         } else
-                            myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
+                            myFarmView.setFeedbackTextArea("You cannot perform the action on Tile " + (selected + 1));
                     }
                     myFarmView.setPlayerDataTextArea(
                             player.getFarmerLevel(),
@@ -175,7 +187,7 @@ public class MyFarmController {
                         if (myFarmModel.getTools().get(3).useTool(farmLot.get(selected), myFarmModel.getPlayer())) {
                             myFarmView.setFeedbackTextArea("Shovel used on Tile " + (selected + 1));
                         } else
-                            myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
+                            myFarmView.setFeedbackTextArea("You do not have enough objectcoins.");
                     }
                     myFarmView.setPlayerDataTextArea(
                             player.getFarmerLevel(),
@@ -184,7 +196,7 @@ public class MyFarmController {
                             player.getFarmerType().getTypeName(),
                             myFarmModel.getDay());
                     selected = null;
-                } else myFarmView.setFeedbackTextArea("Select a tile first");
+                } else myFarmView.setFeedbackTextArea("Select a Tile first.");
             }
         });
 
@@ -197,14 +209,14 @@ public class MyFarmController {
                 if (myFarmView.isTileClicked()) {
                     myFarmView.setTileClicked(false);
 
-                    // Show a confirmation dialog with action cost when the button is clicked
-                    int result = JOptionPane.showConfirmDialog(null, actionConfirmation(3), "Action Confirmation", JOptionPane.YES_NO_OPTION);
-                    if (result == JOptionPane.YES_OPTION) {
-                        if (myFarmModel.getTools().get(3).useTool(farmLot.get(selected), myFarmModel.getPlayer())) {
-                            myFarmView.setFeedbackTextArea("Shovel used on Tile " + (selected + 1));
-                        } else
-                            myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
-                    }
+                    farmLot.get(selected).harvestCrop(player, myFarmModel.getDay());
+                    myFarmView.setFeedbackTextArea("Tile "+selected+" successfully harvested." +
+                            "\nProducts produced: "+ farmLot.get(selected).getHarvestProduce() +
+                            "\nSold for a total of "+farmLot.get(selected).getFinalTotal()+" objectcoins.");
+
+                    farmLot.get(selected).setHarvestProduce(0);
+                    farmLot.get(selected).setFinalTotal(0);
+
                     myFarmView.setPlayerDataTextArea(
                             player.getFarmerLevel(),
                             player.getFarmerExp(),
@@ -212,8 +224,10 @@ public class MyFarmController {
                             player.getFarmerType().getTypeName(),
                             myFarmModel.getDay());
                     selected = null;
+                    myFarmView.setHarvestBtnClickable(false);
 
-                } else myFarmView.setFeedbackTextArea("Select a tile first");
+
+                } else myFarmView.setFeedbackTextArea("Select a Tile first.");
             }
         });
 
@@ -227,7 +241,8 @@ public class MyFarmController {
                 if (result == JOptionPane.YES_OPTION) {
                     if (player.updateFarmerType()) {
                         myFarmView.setFeedbackTextArea("Registration Successful!" +
-                                "\nYou are now a " + player.getFarmerType() + ".");
+                                "\nYou are now a " + player.getFarmerType() + "." +
+                                "\nYou spent "+ player.getFarmerType().getRegFee()+" objectcoins.");
                         myFarmView.setPlayerDataTextArea(
                                 player.getFarmerLevel(),
                                 player.getFarmerExp(),
@@ -247,22 +262,20 @@ public class MyFarmController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 restartPopup();
-                myFarmView.setFeedbackTextArea("Plant selected"); //test
+                myFarmView.setFeedbackTextArea("Select seed to plant."); //test
                 if (myFarmView.isTileClicked()) {
                     plantBtnClicked = true;
                     for (int i = 0; i < myFarmView.getSeedOptionBtns().size(); i++) {
                         if (player.getObjectcoin() > (myFarmModel.getSeeds().get(i).getSeedCost() - player.getFarmerType().getCostReduction()))
                             myFarmView.getSeedOptionBtns().get(i).setEnabled(true);
                     }
-                    if (myFarmModel.getPlayer().getFarmLot().get(selected).getSeed() != null)
-                        myFarmView.setFeedbackTextArea(myFarmModel.getPlayer().getFarmLot().get(selected).getSeed().getSeedName() + " planted in Tile " + (selected + 1));
                     myFarmView.setPlayerDataTextArea(
                             player.getFarmerLevel(),
                             player.getFarmerExp(),
                             player.getObjectcoin(),
                             player.getFarmerType().getTypeName(),
                             myFarmModel.getDay());
-                } else myFarmView.setFeedbackTextArea("select tile first"); //test
+                } else myFarmView.setFeedbackTextArea("Select a Tile first."); //test
             }
         });
 
@@ -279,7 +292,9 @@ public class MyFarmController {
                             break;
                         }
                     }
-                    myFarmView.setFeedbackTextArea(myFarmModel.getPlayer().getFarmLot().get(selected).getSeed().getSeedName() + " planted in Tile " + (selected + 1));
+                    if(farmLot.get(selected).getSeed()!=null)
+                        myFarmView.setFeedbackTextArea(farmLot.get(selected).getSeed().getSeedName() + " planted in Tile " + (selected + 1));
+                    else myFarmView.setFeedbackTextArea("Plant unsuccessful.");
                     myFarmView.setPlayerDataTextArea(
                             player.getFarmerLevel(),
                             player.getFarmerExp(),
@@ -323,8 +338,15 @@ public class MyFarmController {
                     myFarmView.setFeedbackTextArea("You still have tasks to do!\nPlay on!"); //test
             }
         });
-
     }
+
+    /**
+     * This method checks for whether the game will end.
+     * If true, a pop-up asking for restarting the game will appear.
+     * If option Yes is selected, the game will restart. Otherwise,
+     * the application will close.
+     *
+     */
 
     public void restartPopup(){
         if(myFarmModel.checkGameEnd()) {
@@ -338,6 +360,13 @@ public class MyFarmController {
             }
         }
     }
+
+    /**
+     * This method confirms if action on the chosen tool is intended
+     *
+     * @param index of the tool
+     * @return the string response
+     */
     public String actionConfirmation(int index){
         Tool tool = myFarmModel.getTools().get(index);
         return tool.getToolName()+" costs "+tool.getUsageCost()+" objectcoins. Do you want to proceed?";

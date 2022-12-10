@@ -61,9 +61,13 @@ public class MyFarmModel {
         spreadRocks();
     }
 
+    /**
+     * This method spreads distributes the rocks on the tiles
+     */
     public void spreadRocks(){
         try{
             Scanner scan = new Scanner(System.in);
+            System.out.print("Enter filename without .txt : ");
             String filename = scan.nextLine();
             File myObj = new File("src/"+filename+".txt");
             scan = new Scanner(myObj);

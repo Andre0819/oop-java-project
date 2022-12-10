@@ -27,7 +27,7 @@ public class Plow extends Tool {
         boolean actionStatus = false;
 
         // can only be performed on unplowed tile
-        if (!tile.getIsPlowed()) {
+        if (!tile.getIsPlowed() && !tile.getHasRocks()) {
 
             tile.setIsPlowed(true);
 

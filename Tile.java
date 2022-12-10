@@ -1,8 +1,6 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 
 public class Tile {
@@ -13,14 +11,19 @@ public class Tile {
         private boolean hasRocks;
         private int wateredCrop;
         private int fertilizedCrop;
+        private int harvestProduce;
+        private double finalTotal;
         private Seed seed;
         /**
          * Creates a Tiles object.
          * <p>
          * The values of the attributes isWithered and isPlowed
-         * are initialized to false. The myfarm.seed attribute will be
+         * are initialized to false. The seed attribute will be
          * initialized as null. The rest are initialized to 0.
+         * The Tile object will also have a tileNumber which is assigned with the parameter.
          * </p>
+         *
+         * @param tileNumber integer value
          */
         public Tile(int tileNumber){
             this.tileNumber = tileNumber;
@@ -30,20 +33,22 @@ public class Tile {
             this.hasRocks = false;
             this.wateredCrop = 0;
             this.fertilizedCrop = 0;
+            this.harvestProduce = 0;
+            this.finalTotal = 0;
             this.seed = null;
         }
     /**
-     * Takes myfarm.Player object, Seed object, and day integer as parameters.
-     * Modifies the myfarm.seed attribute.
+     * Takes Player object, Seed object, and day integer as parameters.
+     * Modifies the seed attribute.
      * <p>
-     * The method represents the 'plant myfarm.seed' action in the game.
+     * The method represents the 'plant seed' action in the game.
      * It automatically deducts the objectcoins from the
      * player upon use and updates the player exp.
      * Displays text upon success or failure.
      * </p>
      *
-     * @param player    the myfarm.Player object instance
-     * @param plant     the myfarm.seed object instance
+     * @param player    the Player object instance
+     * @param plant     the Seed object instance
      * @param day       the number of days in-game
      */
     public void plantSeed(Player player, Seed plant, int day){
@@ -90,7 +95,7 @@ public class Tile {
     }
 
     /**
-     * Takes myfarm.Player object and day integer as parameters.
+     * Takes Player object and day integer as parameters.
      * Able to modify all class attributes.
      * <p>
      * The method represents the 'harvest crop' action in the game.
@@ -101,44 +106,44 @@ public class Tile {
      * Displays text upon success or failure.
      * </p>
      *
-     * @param player    the myfarm.Player object instance
+     * @param player    the Player object instance
      * @param day       the number of days in-game
      */
     public void harvestCrop(Player player, int day){
-        double HarvestTotal, FinalTotal, WaterBonus, FertBonus, produce; // local variables for computations
+        double HarvestTotal, finalTotal, WaterBonus, FertBonus; // local variables for computations
         if(seed!=null && !this.isWithered) { // check for wither status and if myfarm.seed is planted
             if (seed.getHarvestTime() == (day - this.dayPlanted)) {
                 if (wateredCrop >= seed.getWaterNeeds() && fertilizedCrop >= seed.getFertilizerNeeds()) { // check if water requirement is met
-                    produce = seed.getSeedProduce();
-                    HarvestTotal = produce * (seed.getSellingPrice()+player.getFarmerType().getBonusPerProduce());
+                    harvestProduce = seed.getSeedProduce();
+                    HarvestTotal = harvestProduce * (seed.getSellingPrice()+player.getFarmerType().getBonusPerProduce());
                     if(wateredCrop>= (seed.getWaterBonusLimit()+player.getFarmerType().getWaterBonusLI()))
                         WaterBonus = HarvestTotal * 0.2 * (seed.getWaterBonusLimit()-1);
                     else WaterBonus = HarvestTotal * 0.2 * (wateredCrop-1);
                     if(fertilizedCrop>= (seed.getFertilizerBonusLimit()+player.getFarmerType().getFertBonusLI()))
                         FertBonus = HarvestTotal * 0.5 * (seed.getFertilizerBonusLimit());
                     else FertBonus = HarvestTotal * 0.5 * (fertilizedCrop);
-                    FinalTotal = HarvestTotal + WaterBonus + FertBonus;
+                    this.finalTotal = HarvestTotal + WaterBonus + FertBonus;
                     if (seed.getCropType().compareTo("Flower") == 0) // flowers get bonuses
-                        FinalTotal = FinalTotal * 1.1;
+                        this.finalTotal = this.finalTotal * 1.1;
                     // update objectcoins and exp
-                    player.setObjectcoin(player.getObjectcoin()+FinalTotal);
+                    player.setObjectcoin(player.getObjectcoin()+this.finalTotal);
                     player.updatePlayerExp(seed.getExpYield());
                     // reset attribute values
                     this.wateredCrop = 0;
                     this.fertilizedCrop = 0;
                     this.seed = null;
                     this.isPlowed = false;
-                    System.out.println("Crop successfully harvested.\nProducts produced: " + produce);
                 } else {
                     // set wither status to true
                     this.isWithered = true;
-                    System.out.println("Crop did not meet the water requirement.\nCrop has withered.");
                 }
-            } else
-                System.out.println("The crop is not yet ready for harvest.");
+            }
         }
 
     }
+    /**
+     * Sets the value of seed for this object to null.
+     */
     public void removeSeed(){
         this.seed = null;
     }
@@ -185,10 +190,42 @@ public class Tile {
      * @return  the integer value in attribute wateredCrop
      */
     public int getWateredCrop(){return this.wateredCrop;}
-
+    /**
+     * Returns the number of times the crop is fertilized.
+     *
+     * @return  the integer value in attribute fertilizedCrop
+     */
     public int getFertilizedCrop() {
         return this.fertilizedCrop;
     }
+
+    /**
+     * Returns the number of produce from harvesting.
+     *
+     * @return  the integer value in attribute harvestProduce
+     */
+    public int getHarvestProduce() {
+        return harvestProduce;
+    }
+
+    /**
+     * Returns the number of produce from finalTotal.
+     *
+     * @return  the integer value in attribute finalTotal
+     */
+    public double getFinalTotal() {
+        return finalTotal;
+    }
+    /**
+     * Takes boolean status as a parameter and assigns it
+     * to attribute IsPlowed.
+     * <p>
+     * This is used in multiple methods from different classes.
+     * There is no single description for the parameter status.
+     * </p>
+     *
+     * @param plowed    a boolean value representing the plow status
+     */
     public void setIsPlowed(boolean plowed) {
         this.isPlowed = plowed;
     }
@@ -206,16 +243,50 @@ public class Tile {
     public void setWithered(boolean status){
         this.isWithered = status;
     }
+
+    /**
+     * This method sets the rock status of the tile
+     *
+     * @param hasRocks  a boolean value representing the boolean s
+     *                  status of a crop
+     */
     public void setHasRocks(boolean hasRocks) {
         this.hasRocks = hasRocks;
     }
 
+    /**
+     * This method set the number of times the crop is watered
+     *
+     * @param wateredCrop the number of times the crop is watered
+     */
     public void setWateredCrop(int wateredCrop) {
         this.wateredCrop = wateredCrop;
     }
 
+    /**
+     * This method sets the number of times the crop is fertilized
+     *
+     * @param fertilizedCrop    the number of times the crop is fertilized
+     */
     public void setFertilizedCrop(int fertilizedCrop) {
         this.fertilizedCrop = fertilizedCrop;
     }
 
+    /**
+     * This method sets the value of harvest produce
+     *
+     * @param harvestProduce    the harvest produce
+     */
+    public void setHarvestProduce(int harvestProduce) {
+        this.harvestProduce = harvestProduce;
+    }
+
+    /**
+     * This method sets the final total
+     *
+     * @param finalTotal the final total
+     */
+    public void setFinalTotal(double finalTotal) {
+        this.finalTotal = finalTotal;
+    }
 }

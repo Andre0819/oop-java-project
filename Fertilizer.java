@@ -28,7 +28,7 @@ public class Fertilizer extends Tool {
         boolean actionStatus = false;
 
         if (player.getObjectcoin() >= getUsageCost()) {
-            if (tile.getSeed() != null) {
+            if (tile.getSeed() != null && !tile.getWitherStatus()) {
 
                 tile.setFertilizedCrop(tile.getFertilizedCrop() + 1);
 
