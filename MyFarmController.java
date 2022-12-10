@@ -1,11 +1,12 @@
-/**
- * MyFarmController class represents the controller of the
- */
+
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
+/**
+ * MyFarmController class represents the controller of the game.
+ *
+ */
 public class MyFarmController {
     private MyFarmModel myFarmModel;
     private MyFarmView myFarmView;
@@ -69,7 +70,12 @@ public class MyFarmController {
                             myFarmView.setFeedbackTextArea("Plow used on Tile " + (selected + 1));
                         } else myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
                     }
-                    myFarmView.setPlayerDataTextArea(player.getFarmerLevel(), player.getFarmerExp(), player.getObjectcoin(), player.getFarmerType().getTypeName(), myFarmModel.getDay());
+                    myFarmView.setPlayerDataTextArea(
+                            player.getFarmerLevel(),
+                            player.getFarmerExp(),
+                            player.getObjectcoin(),
+                            player.getFarmerType().getTypeName(),
+                            myFarmModel.getDay());
                     selected = null;
                 } else myFarmView.setFeedbackTextArea("Select a tile first");
             }
@@ -91,7 +97,12 @@ public class MyFarmController {
                         } else
                             myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
                     }
-                    myFarmView.setPlayerDataTextArea(player.getFarmerLevel(), player.getFarmerExp(), player.getObjectcoin(), player.getFarmerType().getTypeName(), myFarmModel.getDay());
+                    myFarmView.setPlayerDataTextArea(
+                            player.getFarmerLevel(),
+                            player.getFarmerExp(),
+                            player.getObjectcoin(),
+                            player.getFarmerType().getTypeName(),
+                            myFarmModel.getDay());
                     selected = null;
                 } else myFarmView.setFeedbackTextArea("Select a tile first");
             }
@@ -113,7 +124,12 @@ public class MyFarmController {
                         } else
                             myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
                     }
-                    myFarmView.setPlayerDataTextArea(player.getFarmerLevel(), player.getFarmerExp(), player.getObjectcoin(), player.getFarmerType().getTypeName(), myFarmModel.getDay());
+                    myFarmView.setPlayerDataTextArea(
+                            player.getFarmerLevel(),
+                            player.getFarmerExp(),
+                            player.getObjectcoin(),
+                            player.getFarmerType().getTypeName(),
+                            myFarmModel.getDay());
                     selected = null;
                 } else myFarmView.setFeedbackTextArea("Select a tile first");
             }
@@ -135,7 +151,12 @@ public class MyFarmController {
                         } else
                             myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
                     }
-                    myFarmView.setPlayerDataTextArea(player.getFarmerLevel(), player.getFarmerExp(), player.getObjectcoin(), player.getFarmerType().getTypeName(), myFarmModel.getDay());
+                    myFarmView.setPlayerDataTextArea(
+                            player.getFarmerLevel(),
+                            player.getFarmerExp(),
+                            player.getObjectcoin(),
+                            player.getFarmerType().getTypeName(),
+                            myFarmModel.getDay());
                     selected = null;
                 } else myFarmView.setFeedbackTextArea("Select a tile first");
             }
@@ -156,7 +177,12 @@ public class MyFarmController {
                         } else
                             myFarmView.setFeedbackTextArea("You do not have enough objectcoins." + (selected + 1));
                     }
-                    myFarmView.setPlayerDataTextArea(player.getFarmerLevel(), player.getFarmerExp(), player.getObjectcoin(), player.getFarmerType().getTypeName(), myFarmModel.getDay());
+                    myFarmView.setPlayerDataTextArea(
+                            player.getFarmerLevel(),
+                            player.getFarmerExp(),
+                            player.getObjectcoin(),
+                            player.getFarmerType().getTypeName(),
+                            myFarmModel.getDay());
                     selected = null;
                 } else myFarmView.setFeedbackTextArea("Select a tile first");
             }
@@ -186,6 +212,7 @@ public class MyFarmController {
                             player.getFarmerType().getTypeName(),
                             myFarmModel.getDay());
                     selected = null;
+
                 } else myFarmView.setFeedbackTextArea("Select a tile first");
             }
         });
@@ -229,6 +256,12 @@ public class MyFarmController {
                     }
                     if (myFarmModel.getPlayer().getFarmLot().get(selected).getSeed() != null)
                         myFarmView.setFeedbackTextArea(myFarmModel.getPlayer().getFarmLot().get(selected).getSeed().getSeedName() + " planted in Tile " + (selected + 1));
+                    myFarmView.setPlayerDataTextArea(
+                            player.getFarmerLevel(),
+                            player.getFarmerExp(),
+                            player.getObjectcoin(),
+                            player.getFarmerType().getTypeName(),
+                            myFarmModel.getDay());
                 } else myFarmView.setFeedbackTextArea("select tile first"); //test
             }
         });
@@ -247,6 +280,12 @@ public class MyFarmController {
                         }
                     }
                     myFarmView.setFeedbackTextArea(myFarmModel.getPlayer().getFarmLot().get(selected).getSeed().getSeedName() + " planted in Tile " + (selected + 1));
+                    myFarmView.setPlayerDataTextArea(
+                            player.getFarmerLevel(),
+                            player.getFarmerExp(),
+                            player.getObjectcoin(),
+                            player.getFarmerType().getTypeName(),
+                            myFarmModel.getDay());
                 }
                 for (JButton btn : myFarmView.getSeedOptionBtns()) {
                     btn.setEnabled(false);
@@ -261,7 +300,12 @@ public class MyFarmController {
             public void actionPerformed(ActionEvent e) {
                 restartPopup();
                 myFarmModel.advanceNextDay();
-
+                myFarmView.setPlayerDataTextArea(
+                        player.getFarmerLevel(),
+                        player.getFarmerExp(),
+                        player.getObjectcoin(),
+                        player.getFarmerType().getTypeName(),
+                        myFarmModel.getDay());
                 myFarmView.setFeedbackTextArea("End day selected"); //test
 
             }
